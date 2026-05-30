@@ -1,16 +1,70 @@
-# React + Vite
+# PayStream UI 🎨
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+> React dashboard for the PayStream payment orchestration system
 
-Currently, two official plugins are available:
+[![React](https://img.shields.io/badge/React-18-blue?logo=react)](https://react.dev)
+[![Vite](https://img.shields.io/badge/Vite-5-purple?logo=vite)](https://vitejs.dev)
+[![Tailwind](https://img.shields.io/badge/Tailwind-3-cyan?logo=tailwindcss)](https://tailwindcss.com)
+[![Deployed](https://img.shields.io/badge/Deployed-Vercel-black?logo=vercel)]()
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Live Demo
 
-## React Compiler
+🔗 https://paystream-ui.vercel.app (update after deploy)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Backend API
 
-## Expanding the ESLint configuration
+🔗 https://github.com/ArnavTambe06/paystream-api
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Features
+
+- JWT authentication (login + register)
+- Wallet dashboard with real-time balance
+- Deposit, withdraw, P2P transfer
+- Transaction history with pagination
+- Admin panel (users, audit logs, system stats)
+- Dark theme, monospace font, responsive layout
+
+## Tech Stack
+
+- React 18 + Vite
+- Tailwind CSS
+- Zustand (state management)
+- Axios (API calls)
+- React Router v6
+
+## Setup
+
+1. Clone the repo
+   \`\`\`bash
+   git clone https://github.com/ArnavTambe06/paystream-ui.git
+   cd paystream-ui
+   \`\`\`
+
+2. Install dependencies
+   \`\`\`bash
+   npm install
+   \`\`\`
+
+3. Configure environment
+   \`\`\`bash
+   cp .env.example .env.local
+
+   # Set VITE_API_BASE_URL to your backend URL
+
+   \`\`\`
+
+4. Run dev server
+   \`\`\`bash
+   npm run dev
+   \`\`\`
+
+## Project Structure
+
+\`\`\`
+src/
+├── api/ ← Axios instance + interceptors
+├── store/ ← Zustand auth store
+├── pages/ ← Login, Register, Dashboard, Transactions, Transfer, Admin
+├── components/ ← Layout, StatCard, TransactionTable, ProtectedRoute
+└── App.jsx ← Routes
+\`\`\`
