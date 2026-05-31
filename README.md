@@ -27,7 +27,7 @@
 
 ## 💸 Backend API
 
-🔗 https://github.com/ArnavTambe06/paystream-api
+🔗 https://github.com/ArnavTambe06/PayStream.git
 
 ---
 
