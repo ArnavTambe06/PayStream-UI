@@ -1,86 +1,165 @@
-const statusColors = {
-  SUCCESS: "text-green-400 bg-green-400/10",
-  FAILED: "text-red-400 bg-red-400/10",
-  PENDING: "text-yellow-400 bg-yellow-400/10",
-  REVERSED: "text-gray-400 bg-gray-400/10",
+const typeConfig = {
+  DEPOSIT: { label: "Deposit", color: "var(--green)", sign: "+" },
+  WITHDRAWAL: { label: "Withdraw", color: "var(--red)", sign: "−" },
+  TRANSFER_OUT: { label: "Sent", color: "var(--ink-mid)", sign: "−" },
+  TRANSFER_IN: { label: "Received", color: "var(--green)", sign: "+" },
 };
 
-const typeColors = {
-  DEPOSIT: "text-green-300",
-  WITHDRAWAL: "text-red-300",
-  TRANSFER_OUT: "text-orange-300",
-  TRANSFER_IN: "text-blue-300",
+const statusConfig = {
+  SUCCESS: { label: "Success", bg: "#EBF5EE", color: "#2E6B42" },
+  FAILED: { label: "Failed", bg: "#FBEAEA", color: "#8B2B2B" },
+  PENDING: { label: "Pending", bg: "#FDF5E6", color: "#7A5210" },
+  REVERSED: { label: "Reversed", bg: "#F0EFED", color: "#5A5550" },
 };
 
 export default function TransactionTable({ transactions }) {
   if (!transactions?.length) {
     return (
-      <div className="text-center text-gray-600 py-12 border border-gray-800 rounded-lg">
+      <div
+        style={{
+          textAlign: "center",
+          padding: "48px 0",
+          color: "var(--ink-light)",
+          fontSize: "14px",
+          border: "1px solid var(--cream-dark)",
+          borderRadius: "10px",
+          background: "white",
+        }}
+      >
         No transactions yet
       </div>
     );
   }
 
   return (
-    <div className="border border-gray-800 rounded-lg overflow-hidden">
-      <table className="w-full text-sm">
+    <div
+      style={{
+        border: "1px solid var(--cream-dark)",
+        borderRadius: "10px",
+        background: "white",
+        overflow: "hidden",
+      }}
+    >
+      <table style={{ width: "100%", borderCollapse: "collapse" }}>
         <thead>
-          <tr className="border-b border-gray-800 bg-gray-900/80">
-            <th className="text-left px-4 py-3 text-gray-500 font-normal">
-              Reference
-            </th>
-            <th className="text-left px-4 py-3 text-gray-500 font-normal">
-              Type
-            </th>
-            <th className="text-left px-4 py-3 text-gray-500 font-normal">
-              Amount
-            </th>
-            <th className="text-left px-4 py-3 text-gray-500 font-normal">
-              Status
-            </th>
-            <th className="text-left px-4 py-3 text-gray-500 font-normal">
-              Date
-            </th>
+          <tr style={{ borderBottom: "1px solid var(--cream-dark)" }}>
+            {["Reference", "Type", "Amount", "Status", "Date"].map((h) => (
+              <th
+                key={h}
+                style={{
+                  padding: "12px 16px",
+                  textAlign: "left",
+                  fontSize: "11px",
+                  fontWeight: "400",
+                  color: "var(--ink-light)",
+                  letterSpacing: "0.6px",
+                  fontFamily: "DM Mono, monospace",
+                  background: "var(--cream)",
+                }}
+              >
+                {h.toUpperCase()}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
-          {transactions.map((txn) => (
-            <tr
-              key={txn.id}
-              className="border-b border-gray-800/50 hover:bg-gray-800/30"
-            >
-              <td className="px-4 py-3 text-gray-400 font-mono text-xs">
-                {txn.referenceId}
-              </td>
-              <td
-                className={`px-4 py-3 font-medium ${typeColors[txn.type] || "text-gray-300"}`}
+          {transactions.map((txn, i) => {
+            const type = typeConfig[txn.type] || {
+              label: txn.type,
+              color: "var(--ink)",
+              sign: "",
+            };
+            const status = statusConfig[txn.status] || {
+              label: txn.status,
+              bg: "#eee",
+              color: "#333",
+            };
+            return (
+              <tr
+                key={txn.id}
+                style={{
+                  borderBottom:
+                    i < transactions.length - 1
+                      ? "1px solid var(--cream-mid)"
+                      : "none",
+                  transition: "background 0.1s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = "var(--cream)")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = "white")
+                }
               >
-                {txn.type}
-              </td>
-              <td className="px-4 py-3 text-white font-medium">
-                ₹
-                {Number(txn.amount).toLocaleString("en-IN", {
-                  minimumFractionDigits: 2,
-                })}
-              </td>
-              <td className="px-4 py-3">
-                <span
-                  className={`text-xs px-2 py-0.5 rounded-full ${statusColors[txn.status] || ""}`}
+                <td
+                  style={{
+                    padding: "14px 16px",
+                    fontFamily: "DM Mono, monospace",
+                    fontSize: "12px",
+                    fontWeight: "300",
+                    color: "var(--ink-mid)",
+                  }}
                 >
-                  {txn.status}
-                </span>
-              </td>
-              <td className="px-4 py-3 text-gray-500 text-xs">
-                {new Date(txn.createdAt).toLocaleDateString("en-IN", {
-                  day: "2-digit",
-                  month: "short",
-                  year: "numeric",
-                  hour: "2-digit",
-                  minute: "2-digit",
-                })}
-              </td>
-            </tr>
-          ))}
+                  {txn.referenceId}
+                </td>
+                <td
+                  style={{
+                    padding: "14px 16px",
+                    fontSize: "13px",
+                    color: type.color,
+                    fontWeight: "400",
+                  }}
+                >
+                  {type.label}
+                </td>
+                <td
+                  style={{
+                    padding: "14px 16px",
+                    fontFamily: "DM Mono, monospace",
+                    fontSize: "13px",
+                    fontWeight: "400",
+                    color: type.color,
+                  }}
+                >
+                  {type.sign}₹
+                  {Number(txn.amount).toLocaleString("en-IN", {
+                    minimumFractionDigits: 2,
+                  })}
+                </td>
+                <td style={{ padding: "14px 16px" }}>
+                  <span
+                    style={{
+                      fontSize: "11px",
+                      padding: "3px 8px",
+                      borderRadius: "4px",
+                      background: status.bg,
+                      color: status.color,
+                      fontFamily: "DM Mono, monospace",
+                      fontWeight: "400",
+                      letterSpacing: "0.3px",
+                    }}
+                  >
+                    {status.label}
+                  </span>
+                </td>
+                <td
+                  style={{
+                    padding: "14px 16px",
+                    fontSize: "12px",
+                    color: "var(--ink-light)",
+                    fontFamily: "DM Mono, monospace",
+                    fontWeight: "300",
+                  }}
+                >
+                  {new Date(txn.createdAt).toLocaleDateString("en-IN", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
+                </td>
+              </tr>
+            );
+          })}
         </tbody>
       </table>
     </div>

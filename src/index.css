@@ -1,1 +1,138 @@
 @import "tailwindcss";
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --slate: #1c2420;
+  --slate-mid: #243028;
+  --slate-light: #2e3d37;
+  --sage: #5c7a6b;
+  --sage-light: #7a9e8c;
+  --sage-pale: #c8d9d1;
+  --cream: #f7f5f0;
+  --cream-mid: #ede9e1;
+  --cream-dark: #ddd8ce;
+  --ink: #1c2420;
+  --ink-mid: #4a5550;
+  --ink-light: #7a8882;
+  --gold: #b8965a;
+  --red: #c5504a;
+  --green: #4a8060;
+}
+
+body {
+  font-family: "DM Sans", sans-serif;
+  background: var(--cream);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+input,
+select,
+textarea,
+button {
+  font-family: inherit;
+}
+
+/* Noise texture overlay for sidebar */
+.sidebar-noise {
+  position: relative;
+}
+.sidebar-noise::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+  border-radius: inherit;
+}
+.sidebar-noise > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Subtle page grid */
+.page-grid {
+  background-image:
+    linear-gradient(rgba(92, 122, 107, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(92, 122, 107, 0.04) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+
+/* Card hover lift */
+.card-lift {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+.card-lift:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 16px rgba(28, 36, 32, 0.08);
+}
+
+/* Smooth scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--cream-mid);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--cream-dark);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sage-pale);
+}
+
+/* Input focus ring */
+.input-field {
+  transition:
+    border-color 0.15s,
+    box-shadow 0.15s;
+}
+.input-field:focus {
+  border-color: var(--sage) !important;
+  box-shadow: 0 0 0 3px rgba(92, 122, 107, 0.12);
+  outline: none;
+}
+
+/* Button press */
+.btn-primary:active {
+  transform: scale(0.99);
+}
+
+/* Fade in */
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.fade-up {
+  animation: fadeUp 0.3s ease forwards;
+}
+
+/* Pulse dot */
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+.pulse {
+  animation: pulse 2s ease-in-out infinite;
+}

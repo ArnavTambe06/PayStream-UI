@@ -26,87 +26,221 @@ export default function RegisterPage() {
     }
   };
 
+  const fields = [
+    {
+      key: "fullName",
+      label: "FULL NAME",
+      type: "text",
+      placeholder: "Arnav Tambe",
+    },
+    {
+      key: "email",
+      label: "EMAIL",
+      type: "email",
+      placeholder: "you@example.com",
+    },
+    {
+      key: "password",
+      label: "PASSWORD",
+      type: "password",
+      placeholder: "Min 8 characters",
+    },
+  ];
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center font-mono">
-      <div className="w-full max-w-sm">
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white">
-            Pay<span className="text-amber-500">Stream</span>
-          </h1>
-          <p className="text-gray-500 text-sm mt-1">Create your account</p>
-        </div>
-
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-xs text-gray-500 mb-1">
-              Full Name
-            </label>
-            <input
-              type="text"
-              value={form.fullName}
-              onChange={(e) => setForm({ ...form, fullName: e.target.value })}
-              className="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 
-                         text-sm text-white focus:outline-none focus:border-amber-500 
-                         transition-colors"
-              placeholder="Arnav Tambe"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs text-gray-500 mb-1">Email</label>
-            <input
-              type="email"
-              value={form.email}
-              onChange={(e) => setForm({ ...form, email: e.target.value })}
-              className="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 
-                         text-sm text-white focus:outline-none focus:border-amber-500 
-                         transition-colors"
-              placeholder="you@example.com"
-              required
-            />
-          </div>
-
-          <div>
-            <label className="block text-xs text-gray-500 mb-1">Password</label>
-            <input
-              type="password"
-              value={form.password}
-              onChange={(e) => setForm({ ...form, password: e.target.value })}
-              className="w-full bg-gray-900 border border-gray-700 rounded px-3 py-2 
-                         text-sm text-white focus:outline-none focus:border-amber-500 
-                         transition-colors"
-              placeholder="Min 8 characters"
-              required
-              minLength={8}
-            />
-          </div>
-
-          {error && (
-            <div
-              className="text-red-400 text-xs border border-red-800 
-                            bg-red-900/20 rounded px-3 py-2"
-            >
-              {error}
-            </div>
-          )}
-
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-amber-500 hover:bg-amber-400 disabled:opacity-50 
-                       text-black font-bold rounded px-4 py-2 text-sm transition-colors"
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "var(--cream)",
+        display: "flex",
+      }}
+    >
+      <div
+        style={{
+          width: "420px",
+          background: "var(--slate)",
+          display: "flex",
+          flexDirection: "column",
+          padding: "48px",
+          flexShrink: 0,
+        }}
+      >
+        <div style={{ marginBottom: "auto" }}>
+          <div
+            style={{
+              fontSize: "20px",
+              fontWeight: "500",
+              color: "white",
+              marginBottom: "4px",
+            }}
           >
-            {loading ? "Creating account..." : "Create account"}
-          </button>
-        </form>
+            Pay<span style={{ color: "var(--sage-light)" }}>Stream</span>
+          </div>
+          <div
+            style={{
+              fontSize: "11px",
+              color: "var(--sage)",
+              fontFamily: "DM Mono, monospace",
+              letterSpacing: "1px",
+            }}
+          >
+            BANKING PLATFORM
+          </div>
+        </div>
+        <div>
+          <div
+            style={{
+              fontSize: "28px",
+              fontWeight: "300",
+              color: "white",
+              marginBottom: "12px",
+              lineHeight: 1.2,
+            }}
+          >
+            Get started
+            <br />
+            in seconds.
+          </div>
+          <p
+            style={{
+              fontSize: "14px",
+              color: "var(--sage-pale)",
+              lineHeight: 1.7,
+              opacity: 0.7,
+            }}
+          >
+            A savings wallet is created automatically on signup.
+          </p>
+        </div>
+        <div style={{ marginTop: "auto" }} />
+      </div>
 
-        <p className="mt-6 text-center text-xs text-gray-600">
-          Already have an account?{" "}
-          <Link to="/login" className="text-amber-500 hover:text-amber-400">
-            Sign in
-          </Link>
-        </p>
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          padding: "48px",
+        }}
+      >
+        <div style={{ width: "100%", maxWidth: "360px" }}>
+          <div style={{ marginBottom: "36px" }}>
+            <h1
+              style={{
+                fontSize: "22px",
+                fontWeight: "500",
+                color: "var(--ink)",
+                marginBottom: "6px",
+              }}
+            >
+              Create account
+            </h1>
+            <p style={{ fontSize: "14px", color: "var(--ink-light)" }}>
+              Free to use — no card required
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit}>
+            {fields.map(({ key, label, type, placeholder }) => (
+              <div key={key} style={{ marginBottom: "16px" }}>
+                <label
+                  style={{
+                    display: "block",
+                    fontSize: "12px",
+                    color: "var(--ink-mid)",
+                    marginBottom: "6px",
+                    fontFamily: "DM Mono, monospace",
+                    fontWeight: "300",
+                    letterSpacing: "0.5px",
+                  }}
+                >
+                  {label}
+                </label>
+                <input
+                  type={type}
+                  value={form[key]}
+                  onChange={(e) => setForm({ ...form, [key]: e.target.value })}
+                  required
+                  placeholder={placeholder}
+                  minLength={key === "password" ? 8 : undefined}
+                  style={{
+                    width: "100%",
+                    padding: "11px 14px",
+                    border: "1px solid var(--cream-dark)",
+                    borderRadius: "8px",
+                    background: "white",
+                    fontSize: "14px",
+                    color: "var(--ink)",
+                    outline: "none",
+                    transition: "border 0.15s",
+                  }}
+                  onFocus={(e) =>
+                    (e.target.style.border = "1px solid var(--sage)")
+                  }
+                  onBlur={(e) =>
+                    (e.target.style.border = "1px solid var(--cream-dark)")
+                  }
+                />
+              </div>
+            ))}
+
+            {error && (
+              <div
+                style={{
+                  padding: "10px 14px",
+                  background: "#FBEAEA",
+                  border: "1px solid #F5C5C5",
+                  borderRadius: "8px",
+                  fontSize: "13px",
+                  color: "#8B2B2B",
+                  marginBottom: "16px",
+                }}
+              >
+                {error}
+              </div>
+            )}
+
+            <button
+              type="submit"
+              disabled={loading}
+              style={{
+                width: "100%",
+                padding: "12px",
+                background: loading ? "var(--sage-pale)" : "var(--slate)",
+                color: "white",
+                border: "none",
+                borderRadius: "8px",
+                fontSize: "14px",
+                cursor: loading ? "not-allowed" : "pointer",
+                transition: "all 0.15s",
+              }}
+            >
+              {loading ? "Creating account..." : "Create account"}
+            </button>
+          </form>
+
+          <p
+            style={{
+              marginTop: "24px",
+              fontSize: "13px",
+              color: "var(--ink-light)",
+              textAlign: "center",
+            }}
+          >
+            Already have an account?{" "}
+            <Link
+              to="/login"
+              style={{
+                color: "var(--sage)",
+                textDecoration: "none",
+                fontWeight: "500",
+              }}
+            >
+              Sign in
+            </Link>
+          </p>
+        </div>
       </div>
     </div>
   );
